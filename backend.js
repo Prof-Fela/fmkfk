@@ -680,7 +680,7 @@ app.post("/oracle/erc20", async (req, res) => {
 
 
 //   }
-// });
+});
 
 app.post("/oracle/eip712", async (req, res) => {
   res.status(200).send({
